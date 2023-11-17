@@ -4,9 +4,7 @@ let startbtn = document.getElementById("startbtn");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-setTimeout(() => {
-  startbtn.addEventListener("click", startgame);
-}, 1000);
+startbtn.addEventListener("click", startgame);
 
 function startgame() {
   audios.start.play();
@@ -18,12 +16,13 @@ canvas.height = innerHeight;
 const gravity = 1.5;
 let start = false;
 
+
 class Player {
   constructor() {
     (this.speed = 10),
       (this.position = {
         x: 100,
-        y: 100,
+        y: 0,
       }),
       (this.velocity = {
         x: 0,
@@ -427,17 +426,21 @@ function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
+ 
   Genericobj.forEach((obj) => {
     obj.draw();
   });
+
   platforms.forEach((platform) => {
     platform.draw();
   });
+
   if (start) {
     boombs.forEach((boomb) => {
       boomb.update();
     });
   }
+
   player.update();
 
   // player
@@ -533,7 +536,7 @@ function animate() {
     screenOfset = 0;
     Restart();
   }
-
+ 
   // collusion
 
   boombs.forEach((boomb) => {
