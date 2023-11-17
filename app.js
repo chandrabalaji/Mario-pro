@@ -856,16 +856,18 @@ const handlekeyDown = (event) => {
 
     case "d":
       start = true;
-
+      audios.start.play();
       keys.right.pressed = true;
       keySet = "Right";
 
       break;
     case "ArrowRight":
-      if (start) {
-        keys.right.pressed = true;
-        keySet = "Right";
-      }
+      start = true;
+      audios.start.play();
+
+      keys.right.pressed = true;
+      keySet = "Right";
+
       break;
     case "a":
       keys.left.pressed = true;
