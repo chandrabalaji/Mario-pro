@@ -1,16 +1,8 @@
 import { images, audios } from "./img.js";
 
-let startbtn = document.getElementById("startbtn");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-startbtn.addEventListener("click", startgame);
-
-function startgame() {
-  audios.start.play();
-  startbtn.style.display = "none";
-  start = true;
-}
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 const gravity = 1.5;
@@ -331,7 +323,7 @@ let boombs = [
 const platformimg = images.platform;
 const platformSmallimg = images.Platformsmall;
 let player = new Player();
-let playerdisplay = false;
+
 let platforms = [
   // small platform
   new Platform({
@@ -393,7 +385,6 @@ let platforms = [
     y: 280,
     Image: images.Flag,
   }),
-  
 ];
 
 let Genericobj = [
@@ -441,9 +432,7 @@ function animate() {
     });
   }
 
-  // if (playerdisplay) {
-    player.update();
-  // }
+  player.update();
 
   // player
 
@@ -529,7 +518,7 @@ function animate() {
   }
   // loose condition
   if (player.position.y >= canvas.height) {
-    audios.start.pause();
+    audios.start.play();
     if (!diebygoomba) {
       audios.Gameover.play();
     } else {
@@ -866,10 +855,11 @@ const handlekeyDown = (event) => {
       break;
 
     case "d":
-      if (start) {
-        keys.right.pressed = true;
-        keySet = "Right";
-      }
+      start = true;
+
+      keys.right.pressed = true;
+      keySet = "Right";
+
       break;
     case "ArrowRight":
       if (start) {
