@@ -4,11 +4,7 @@ let startbtn = document.getElementById("startbtn");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-
-
-
 startbtn.addEventListener("click", startgame);
-
 
 function startgame() {
   audios.start.play();
@@ -19,6 +15,7 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 const gravity = 1.5;
 let start = false;
+
 class Player {
   constructor() {
     (this.speed = 10),
@@ -582,9 +579,9 @@ function Restart() {
         platformimg.width * 5 +
         300 +
         platformimg.width -
-        platformSmallimg.width,
-      y: 490,
-      Image: platformSmallimg,
+        images.platformSmallTall.width,
+      y: 390,
+      Image: images.platformSmallTall,
     }),
     new Platform({
       x: platformimg.width * 7 + 650 - 2,
@@ -622,24 +619,46 @@ function Restart() {
       Image: platformimg,
     }),
     new Platform({
-      x: platformimg.width * 6 + 600,
+      x: platformimg.width * 6 + 700,
       y: 610,
       Image: platformimg,
     }),
     new Platform({
-      x: platformimg.width * 7 + 600 - 2,
+      x: platformimg.width * 7 + 700 - 2,
       y: 610,
       Image: platformimg,
     }),
     new Platform({
-      x: platformimg.width * 8 + 900,
-      y: 610,
-      Image: platformimg,
+      x: platformimg.width * 8 + 1000,
+      y: 650,
+      Image: images.lrgPlatform,
+    }),
+    new Platform({
+      x: platformimg.width * 10 + 1000,
+      y: 650,
+      Image: images.lrgPlatform2,
+    }),
+    new Platform({
+      x: platformimg.width * 12 + 900,
+      y: 650,
+      Image: images.lrgPlatform2,
+    }),
+    // Flag
+    new Platform({
+      x: platformimg.width * 14 + 200,
+      y: 280,
+      Image: images.Flag,
     }),
   ];
+
   Genericobj = [
     new GenericObject({ x: -1, y: -1, Image: images.background }),
-    new GenericObject({ x: 400, y: 100, Image: images.mountains }),
+    new GenericObject({ x: 760, y: 100, Image: images.sun }),
+    new GenericObject({ x: 3000, y: 100, Image: images.sun }),
+    new GenericObject({ x: 5100, y: 100, Image: images.sun }),
+    new GenericObject({ x: 7000, y: 100, Image: images.sun }),
+
+    new GenericObject({ x: 700, y: 100, Image: images.mountains }),
   ];
 
   boombs = [
@@ -653,7 +672,7 @@ function Restart() {
         y: 0,
       },
       distance: {
-        limite: 520,
+        limite: 290,
         traveled: 0,
       },
     }),
@@ -667,13 +686,13 @@ function Restart() {
         y: 0,
       },
       distance: {
-        limite: 520,
+        limite: 340,
         traveled: 0,
       },
     }),
     new Goomba({
       position: {
-        x: 2948,
+        x: 3448,
         y: 100,
       },
       velocity: {
@@ -682,6 +701,92 @@ function Restart() {
       },
       distance: {
         limite: 720,
+        traveled: 0,
+      },
+    }),
+    new Goomba({
+      position: {
+        x: 4748,
+        y: 100,
+      },
+      velocity: {
+        x: -1,
+        y: 0,
+      },
+      distance: {
+        limite: 630,
+        traveled: 0,
+      },
+    }),
+    new Goomba({
+      position: {
+        x: 5248,
+        y: 100,
+      },
+      velocity: {
+        x: -1,
+        y: 0,
+      },
+      distance: {
+        limite: 1430,
+        traveled: 0,
+      },
+    }),
+    new Goomba({
+      position: {
+        x: 6248,
+        y: 100,
+      },
+      velocity: {
+        x: -1,
+        y: 0,
+      },
+      distance: {
+        limite: 830,
+        traveled: 0,
+      },
+    }),
+    // new
+
+    new Goomba({
+      position: {
+        x: 7248,
+        y: 100,
+      },
+      velocity: {
+        x: -1,
+        y: 0,
+      },
+      distance: {
+        limite: 1000,
+        traveled: 0,
+      },
+    }),
+    new Goomba({
+      position: {
+        x: 7548,
+        y: 100,
+      },
+      velocity: {
+        x: -1,
+        y: 0,
+      },
+      distance: {
+        limite: 1200,
+        traveled: 0,
+      },
+    }),
+    new Goomba({
+      position: {
+        x: 7448,
+        y: 100,
+      },
+      velocity: {
+        x: -1,
+        y: 0,
+      },
+      distance: {
+        limite: 1300,
         traveled: 0,
       },
     }),
@@ -702,7 +807,16 @@ const handlekeyUp = (event) => {
       player.velocity.y = 0;
       keys.Up.pressed = false;
       break;
+    case "ArrowUp":
+      player.velocity.y = 0;
+      keys.Up.pressed = false;
+      break;
     case "d":
+      keys.right.pressed = false;
+      player.CurrentSprit = player.sprit.stand.right;
+
+      break;
+    case "ArrowRight":
       keys.right.pressed = false;
       player.CurrentSprit = player.sprit.stand.right;
 
@@ -711,7 +825,9 @@ const handlekeyUp = (event) => {
       keys.left.pressed = false;
       player.CurrentSprit = player.sprit.stand.Left;
       break;
-    default:
+    case "ArrowLeft":
+      keys.left.pressed = false;
+      player.CurrentSprit = player.sprit.stand.Left;
       break;
   }
 };
@@ -730,19 +846,39 @@ const handlekeyDown = (event) => {
       }
       audios.jump.play();
       break;
+
+    case "ArrowUp":
+      player.velocity.y -= 25;
+      keys.Up.pressed = true;
+      if (keySet === "Right") {
+        player.CurrentSprit = player.sprit.jump.right;
+      } else {
+        player.CurrentSprit = player.sprit.jump.Left;
+      }
+      audios.jump.play();
+      break;
+
     case "d":
       if (start) {
         keys.right.pressed = true;
         keySet = "Right";
       }
-
+      break;
+    case "ArrowRight":
+      if (start) {
+        keys.right.pressed = true;
+        keySet = "Right";
+      }
       break;
     case "a":
       keys.left.pressed = true;
       keySet = "Left";
 
       break;
-    default:
+    case "ArrowLeft":
+      keys.left.pressed = true;
+      keySet = "Left";
+
       break;
   }
 };
