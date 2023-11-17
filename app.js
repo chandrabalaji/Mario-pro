@@ -16,13 +16,12 @@ canvas.height = innerHeight;
 const gravity = 1.5;
 let start = false;
 
-
 class Player {
   constructor() {
     (this.speed = 10),
       (this.position = {
         x: 100,
-        y: 0,
+        y: 1,
       }),
       (this.velocity = {
         x: 0,
@@ -332,6 +331,7 @@ let boombs = [
 const platformimg = images.platform;
 const platformSmallimg = images.Platformsmall;
 let player = new Player();
+let playerdisplay = false;
 let platforms = [
   // small platform
   new Platform({
@@ -393,6 +393,7 @@ let platforms = [
     y: 280,
     Image: images.Flag,
   }),
+  
 ];
 
 let Genericobj = [
@@ -426,7 +427,6 @@ function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
- 
   Genericobj.forEach((obj) => {
     obj.draw();
   });
@@ -441,7 +441,9 @@ function animate() {
     });
   }
 
-  player.update();
+  // if (playerdisplay) {
+    player.update();
+  // }
 
   // player
 
@@ -536,7 +538,7 @@ function animate() {
     screenOfset = 0;
     Restart();
   }
- 
+
   // collusion
 
   boombs.forEach((boomb) => {
@@ -799,7 +801,7 @@ function Restart() {
   startgame();
 }
 
-platformimg.onload = () => {
+images.Flag.onload = () => {
   animate();
 };
 
