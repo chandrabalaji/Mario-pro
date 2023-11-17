@@ -4,7 +4,9 @@ let startbtn = document.getElementById("startbtn");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-startbtn.addEventListener("click", startgame);
+setTimeout(() => {
+  startbtn.addEventListener("click", startgame);
+}, 1000);
 
 function startgame() {
   audios.start.play();
